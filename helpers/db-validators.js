@@ -1,6 +1,6 @@
 const Role = require("../models/role");
 const User = require("../models/user");
-const { Category, Product } = require("../models");
+const { Category, Product, Owner } = require("../models");
 
 const isRoleValid = async (role = "") => {
 	const existRole = await Role.findOne({ role });
@@ -37,6 +37,13 @@ const existProductByID = async (id = "") => {
 	}
 };
 
+const existOwnerByID = async (id = "") => {
+	const existOwner = await Owner.findById(id);
+	if (!existOwner) {
+		throw new Error(`The id for owner does not exist: ${id}`);
+	}
+};
+
 const collectionsPermitted = (collection = "", collections = []) => {
 	const includes = collections.includes(collection);
 	if (!includes) {
@@ -54,5 +61,6 @@ module.exports = {
 	existUserByID,
 	existCategoryByID,
 	existProductByID,
+	existOwnerByID,
 	collectionsPermitted,
 };
