@@ -31,7 +31,7 @@ router.get(
 	obtainOwner
 );
 
-//Create product - private - any with valid token
+//Create owner - private - any with valid token
 router.post(
 	"/",
 	[
@@ -58,7 +58,7 @@ router.put(
 	updateOwner
 );
 
-//Delete a product - Admin
+//Delete a owner - Admin
 router.delete(
 	"/:id",
 	[
