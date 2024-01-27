@@ -1,11 +1,18 @@
 const Role = require("../models/role");
 const User = require("../models/user");
-const { Category, Product, Owner } = require("../models");
+const { Category, Product, Owner, Patient, Race } = require("../models");
 
 const isRoleValid = async (role = "") => {
 	const existRole = await Role.findOne({ role });
 	if (!existRole) {
 		throw new Error(`The role ${role} is not registered in the DB`);
+	}
+};
+
+const isRaceValid = async (race = "") => {
+	const existRace = await Race.findOne({ race });
+	if (!existRace) {
+		throw new Error(`The race ${race} is not registered in the DB`);
 	}
 };
 
@@ -44,6 +51,13 @@ const existOwnerByID = async (id = "") => {
 	}
 };
 
+const existPatientByID = async (id = "") => {
+	const existPatient = await Patient.findById(id);
+	if (!existPatient) {
+		throw new Error(`The id for patient does not exist: ${id}`);
+	}
+};
+
 const collectionsPermitted = (collection = "", collections = []) => {
 	const includes = collections.includes(collection);
 	if (!includes) {
@@ -57,10 +71,12 @@ const collectionsPermitted = (collection = "", collections = []) => {
 
 module.exports = {
 	isRoleValid,
+	isRaceValid,
 	existEmail,
 	existUserByID,
 	existCategoryByID,
 	existProductByID,
 	existOwnerByID,
+	existPatientByID,
 	collectionsPermitted,
 };

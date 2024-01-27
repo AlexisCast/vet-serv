@@ -3,46 +3,49 @@ const { check } = require("express-validator");
 
 const { validateFields, validateJWT, isAdminRole } = require("../middlewares");
 
-const { existOwnerByID } = require("../helpers/db-validators");
+const {
+	existOwnerByID,
+	isRaceValid,
+	existPatientByID,
+} = require("../helpers/db-validators");
 
 const {
-	obtainOwners,
-	createOwner,
-	obtainOwner,
-	updateOwner,
-	deleteOwner,
-} = require("../controllers/owners");
+	obtainPatient,
+	createPatient,
+	obtainPatients,
+	updatePatient,
+	deletePatient,
+} = require("../controllers/patients");
 
 const router = Router();
 
-//Get all the owners - private
-router.get("/", [validateJWT, isAdminRole, validateFields], obtainOwners);
+//Get all the patients - private - with valid token
+router.get("/", [validateJWT, isAdminRole, validateFields], obtainPatients);
 
-//Get a owner by id - private
+//Get a patient by id - private - with valid token
 router.get(
 	"/:id",
 	[
 		validateJWT,
 		isAdminRole,
 		check("id", "Not a Mongo ID valid").isMongoId(),
-		check("id").custom(existOwnerByID),
+		check("id").custom(existPatientByID),
 		validateFields,
 	],
-	obtainOwner
+	obtainPatient
 );
 
-//Create owner - private - any with valid token
+//Create patient - private - with valid token
 router.post(
 	"/",
 	[
 		validateJWT,
 		isAdminRole,
 		check("name", "The name is required").not().isEmpty(),
-		check("lastName", "The lastName is required").not().isEmpty(),
-		check("phoneNumber1", "The phoneNumber1 is required").not().isEmpty(),
+		check("race").custom(isRaceValid),
 		validateFields,
 	],
-	createOwner
+	createPatient
 );
 
 //Update - private - Admin
@@ -52,26 +55,26 @@ router.put(
 		validateJWT,
 		isAdminRole,
 		check("id", "Not a Mongo ID valid").isMongoId(),
-		check("id").custom(existOwnerByID),
+		check("id").custom(existPatientByID),
 		check("name", "The name is required").not().isEmpty(),
-		check("lastName", "The lastName is required").not().isEmpty(),
-		check("phoneNumber1", "The phoneNumber1 is required").not().isEmpty(),
+		check("race").custom(isRaceValid),
+		check("owner").custom(existOwnerByID),
 		validateFields,
 	],
-	updateOwner
+	updatePatient
 );
 
-//Delete a owner - Admin
+//Delete a patient - Admin
 router.delete(
 	"/:id",
 	[
 		validateJWT,
 		isAdminRole,
 		check("id", "Not a Mongo ID valid").isMongoId(),
-		check("id").custom(existOwnerByID),
+		check("id").custom(existPatientByID),
 		validateFields,
 	],
-	deleteOwner
+	deletePatient
 );
 
 module.exports = router;
