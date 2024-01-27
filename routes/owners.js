@@ -53,6 +53,9 @@ router.put(
 		isAdminRole,
 		check("id", "Not a Mongo ID valid").isMongoId(),
 		check("id").custom(existOwnerByID),
+		check("name", "The name is required").not().isEmpty(),
+		check("lastName", "The lastName is required").not().isEmpty(),
+		check("phoneNumber1", "The phoneNumber1 is required").not().isEmpty(),
 		validateFields,
 	],
 	updateOwner
