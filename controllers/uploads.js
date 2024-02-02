@@ -7,7 +7,7 @@ cloudinary.config(process.env.CLOUDINARY_URL);
 const { response } = require("express");
 const { uploadFile } = require("../helpers");
 
-const { User, Product } = require("../models");
+const { User, Product, Patient } = require("../models");
 
 const loadFile = async (req, res = response) => {
 	//Images
@@ -49,6 +49,15 @@ const updateImage = async (req, res = response) => {
 			if (!model) {
 				return res.status(400).json({
 					msg: `Product ${id}, does not exist.`,
+				});
+			}
+			break;
+
+		case "patients":
+			model = await Patient.findById(id);
+			if (!model) {
+				return res.status(400).json({
+					msg: `Patient ${id}, does not exist.`,
 				});
 			}
 			break;
@@ -105,6 +114,15 @@ const updateImageCloudinary = async (req, res = response) => {
 			if (!model) {
 				return res.status(400).json({
 					msg: `Product ${id}, does not exist.`,
+				});
+			}
+			break;
+
+		case "patients":
+			model = await Patient.findById(id);
+			if (!model) {
+				return res.status(400).json({
+					msg: `Patient ${id}, does not exist.`,
 				});
 			}
 			break;

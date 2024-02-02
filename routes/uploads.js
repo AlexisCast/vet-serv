@@ -24,7 +24,7 @@ router.put(
 		validateFileToUpload,
 		check("id", "The id mush be from Mongo").isMongoId(),
 		check("collection").custom((c) =>
-			collectionsPermitted(c, ["users", "products"])
+			collectionsPermitted(c, ["users", "products", "patients"])
 		),
 		validateFields,
 	],
@@ -37,7 +37,7 @@ router.get(
 	[
 		check("id", "The id mush be from Mongo").isMongoId(),
 		check("collection").custom((c) =>
-			collectionsPermitted(c, ["users", "products"])
+			collectionsPermitted(c, ["users", "products", "patients"])
 		),
 		validateFields,
 	],
