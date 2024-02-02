@@ -43,6 +43,14 @@ router.post(
 		isAdminRole,
 		check("name", "The name is required").not().isEmpty(),
 		check("race").custom(isRaceValid),
+		check("age", "Age must be a number between 0 and 100").isFloat({
+			min: 0,
+			max: 100,
+		}),
+		check("weight", "Weight must be a number between 0 and 999").isFloat({
+			min: 0,
+			max: 999,
+		}),
 		validateFields,
 	],
 	createPatient

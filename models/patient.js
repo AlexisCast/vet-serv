@@ -5,12 +5,20 @@ const patientSchema = new mongoose.Schema({
 		type: String,
 		required: [true, "The name is required"],
 	},
+	age: {
+		type: Number,
+		min: 0,
+	},
+	weight: {
+		type: Number,
+		min: 0,
+	},
 	race: {
 		type: String,
 	},
 	gender: {
 		type: String,
-		enum: ["f", "m"],
+		enum: ["F", "M"],
 	},
 	sterilized: {
 		type: Boolean,
@@ -33,6 +41,9 @@ const patientSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Owner",
 		required: true,
+	},
+	img: {
+		type: String,
 	},
 });
 

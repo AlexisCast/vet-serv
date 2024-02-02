@@ -12,7 +12,7 @@ const obtainPatients = async (req, res = response) => {
 		Patient.countDocuments(query),
 		Patient.find(query)
 			.populate("user", "name")
-			.populate("owner", "name")
+			.populate("owner", "name phoneNumber1")
 			.sort({ name: 1 })
 			.skip(Number(from))
 			.limit(Number(limit)),
@@ -29,16 +29,12 @@ const obtainPatient = async (req, res = response) => {
 
 	const patient = await Patient.findById(id)
 		.populate("user", "name")
-		.populate("owner", "name");
-
+		.populate("owner", "name phoneNumber1");
 	res.json(patient);
 };
 
 const createPatient = async (req, res = response) => {
 	const { user, ...body } = req.body;
-
-	console.log("body",body);
-	
 
 	const patientDB = await Patient.findOne({ name: body.name.toUpperCase() });
 
@@ -62,7 +58,7 @@ const createPatient = async (req, res = response) => {
 	res.status(201).json(patient);
 };
 
-const updatePatient= async (req, res = response) => {
+const updatePatient = async (req, res = response) => {
 	const { id } = req.params;
 	const { state, user, ...data } = req.body;
 
