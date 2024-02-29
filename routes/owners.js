@@ -13,6 +13,8 @@ const {
 	deleteOwner,
 } = require("../controllers/owners");
 
+const { obtainPatientsByOwner } = require("../controllers/patients");
+
 const router = Router();
 
 //Get all the owners - private
@@ -29,6 +31,18 @@ router.get(
 		validateFields,
 	],
 	obtainOwner
+);
+
+router.get(
+	"/:id/patients",
+	[
+		validateJWT,
+		isAdminRole,
+		check("id", "Not a Mongo ID valid").isMongoId(),
+		check("id").custom(existOwnerByID),
+		validateFields,
+	],
+	obtainPatientsByOwner
 );
 
 //Create owner - private - any with valid token

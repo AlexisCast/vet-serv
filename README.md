@@ -11,7 +11,9 @@ npx nodemon app
 ```
 
 ## Tags:
-
+- v1.0.0 “v1.0.0” -> feat/3_Patients_obtainPatientsByOwner -> Branch 1.0.0-rc-1
+  - feat/1 -> feat/3
+  - compatible with Branch 1.0.0-rc-1 in https://github.com/AlexisCast/vet-react
 
 
 ## Env File:

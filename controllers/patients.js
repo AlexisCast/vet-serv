@@ -1,5 +1,5 @@
 const { response } = require("express");
-const { Patient } = require("../models");
+const { Patient, Owner } = require("../models");
 
 const obtainPatients = async (req, res = response) => {
 	const { limit = 50, from = 0 } = req.query;
@@ -19,6 +19,32 @@ const obtainPatients = async (req, res = response) => {
 	]);
 
 	res.json({
+		total,
+		patients,
+	});
+};
+
+const obtainPatientsByOwner = async (req, res = response) => {
+	const { limit = 50, from = 0 } = req.query;
+	///api/patients?limit=5&from=10
+	const { id } = req.params;
+
+	const query = { state: true, owner: id };
+	// const query = { state: { $in: [true, false] } };
+
+	const [total, patients, owner] = await Promise.all([
+		Patient.countDocuments(query),
+		Patient.find(query)
+			.populate("user", "name")
+			.populate("owner", "name phoneNumber1")
+			.sort({ name: 1 })
+			.skip(Number(from))
+			.limit(Number(limit)),
+		Owner.findById(id).populate("user", "name"),
+	]);
+
+	res.json({
+		owner,
 		total,
 		patients,
 	});
@@ -96,6 +122,7 @@ const deletePatient = async (req, res = response) => {
 module.exports = {
 	createPatient,
 	obtainPatients,
+	obtainPatientsByOwner,
 	obtainPatient,
 	updatePatient,
 	deletePatient,
