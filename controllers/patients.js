@@ -55,7 +55,7 @@ const obtainPatient = async (req, res = response) => {
 
 	const patient = await Patient.findById(id)
 		.populate("user", "name")
-		.populate("owner", "name phoneNumber1");
+		.populate("owner", "name lastName phoneNumber1");
 	res.json(patient);
 };
 
@@ -73,6 +73,7 @@ const createPatient = async (req, res = response) => {
 	//Generate the data to create/save
 	const data = {
 		...body,
+		name: body.name.toUpperCase(),
 		user: req.user._id,
 	};
 
