@@ -89,8 +89,6 @@ const updatePatient = async (req, res = response) => {
 	const { id } = req.params;
 	const { state, user, ...data } = req.body;
 
-	console.log("up", data);
-
 	if (data.name) {
 		data.name = data.name.toUpperCase();
 	}

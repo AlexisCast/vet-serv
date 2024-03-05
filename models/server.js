@@ -16,6 +16,7 @@ class Server {
 			patients: "/api/patients",
 			products: "/api/products",
 			search: "/api/search",
+			species: "/api/species",
 			users: "/api/users",
 			uploads: "/api/uploads",
 		};
@@ -61,6 +62,7 @@ class Server {
 		this.app.use(this.paths.patients, require("../routes/patients"));
 		this.app.use(this.paths.products, require("../routes/products"));
 		this.app.use(this.paths.search, require("../routes/search"));
+		this.app.use(this.paths.species, require("../routes/species"));
 		this.app.use(this.paths.users, require("../routes/users"));
 		this.app.use(this.paths.uploads, require("../routes/uploads"));
 	}

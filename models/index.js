@@ -2,7 +2,7 @@ const Category = require("./category");
 const Owner = require("./owner");
 const Patient = require("./patient");
 const Product = require("./product");
-const Race = require("./race");
+const Specie = require("./specie");
 const Role = require("./role");
 const Server = require("./server");
 const User = require("./user");
@@ -12,7 +12,7 @@ module.exports = {
 	Owner,
 	Patient,
 	Product,
-	Race,
+	Specie,
 	Role,
 	Server,
 	User,
