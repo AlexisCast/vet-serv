@@ -14,7 +14,9 @@ const patientSchema = new mongoose.Schema({
 		min: 0,
 	},
 	specie: {
-		type: String,
+		type: mongoose.Schema.ObjectId,
+		ref: "Specie",
+		required: true,
 	},
 	gender: {
 		type: String,

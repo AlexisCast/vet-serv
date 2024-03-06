@@ -16,6 +16,13 @@ const isSpecieValid = async (specie = "") => {
 	}
 };
 
+const existSpecieByID = async (id = "") => {
+	const existSpecie = await Specie.findById(id);
+	if (!existSpecie) {
+		throw new Error(`The specie id does not exist: ${id}`);
+	}
+};
+
 const existEmail = async (email = "") => {
 	const existEmail = await User.findOne({ email });
 	if (existEmail) {
@@ -72,6 +79,7 @@ const collectionsPermitted = (collection = "", collections = []) => {
 module.exports = {
 	isRoleValid,
 	isSpecieValid,
+	existSpecieByID,
 	existEmail,
 	existUserByID,
 	existCategoryByID,
