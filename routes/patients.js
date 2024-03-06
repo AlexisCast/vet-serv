@@ -1,12 +1,18 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-const { validateFields, validateJWT, isAdminRole } = require("../middlewares");
+const {
+	validateFields,
+	validateJWT,
+	isAdminRole,
+	validateGender,
+} = require("../middlewares");
 
 const {
 	existOwnerByID,
-	isRaceValid,
+	isSpecieValid,
 	existPatientByID,
+	existSpecieByID,
 } = require("../helpers/db-validators");
 
 const {
@@ -42,7 +48,8 @@ router.post(
 		validateJWT,
 		isAdminRole,
 		check("name", "The name is required").not().isEmpty(),
-		check("race").custom(isRaceValid),
+		// check("specie").custom(isSpecieValid),
+		check("specie").custom(existSpecieByID),
 		check("age", "Age must be a number between 0 and 100").isFloat({
 			min: 0,
 			max: 100,
@@ -51,6 +58,7 @@ router.post(
 			min: 0,
 			max: 999,
 		}),
+		check("gender").custom(validateGender),
 		validateFields,
 	],
 	createPatient
@@ -65,8 +73,10 @@ router.put(
 		check("id", "Not a Mongo ID valid").isMongoId(),
 		check("id").custom(existPatientByID),
 		check("name", "The name is required").not().isEmpty(),
-		check("race").custom(isRaceValid),
+		// check("specie").custom(isSpecieValid),
+		check("specie").custom(existSpecieByID),
 		check("owner").custom(existOwnerByID),
+		check("gender").custom(validateGender),
 		validateFields,
 	],
 	updatePatient

@@ -14,6 +14,14 @@ const validateFields = (req, res, next) => {
 	next();
 };
 
+const validateGender = (gender = "") => {
+	if (gender !== "F" && gender !== "M") {
+		throw new Error("Gender must be 'F' or 'M'");
+	}
+	return true;
+};
+
 module.exports = {
 	validateFields,
+	validateGender,
 };
