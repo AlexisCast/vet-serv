@@ -49,6 +49,7 @@ router.post(
 		isAdminRole,
 		check("name", "The name is required").not().isEmpty(),
 		// check("specie").custom(isSpecieValid),
+		check("specie", "The specie is required").not().isEmpty(),
 		check("specie").custom(existSpecieByID),
 		check("age", "Age must be a number between 0 and 100").isFloat({
 			min: 0,
@@ -59,6 +60,8 @@ router.post(
 			max: 999,
 		}),
 		check("gender").custom(validateGender),
+		check("owner", "The owner is required").not().isEmpty(),
+		check("owner").custom(existOwnerByID),
 		validateFields,
 	],
 	createPatient
