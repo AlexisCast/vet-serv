@@ -15,8 +15,8 @@ const validateFields = (req, res, next) => {
 };
 
 const validateGender = (gender = "") => {
-	if (gender !== "F" && gender !== "M") {
-		throw new Error("Gender must be 'F' or 'M'");
+	if (gender !== "F" && gender !== "M" && gender !== "") {
+		throw new Error("Gender must be 'F' or 'M' or '");
 	}
 	return true;
 };

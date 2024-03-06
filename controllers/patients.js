@@ -80,6 +80,10 @@ const createPatient = async (req, res = response) => {
 		user: req.user._id,
 	};
 
+	if (data.sterilized === "") {
+		delete data.sterilized; // Remove sterilized property
+	}
+
 	const patient = await new Patient(data);
 
 	//Create/Save in DB
@@ -97,6 +101,10 @@ const updatePatient = async (req, res = response) => {
 	}
 
 	data.user = req.user._id;
+
+	if (data.sterilized === "") {
+		delete data.sterilized; // Remove sterilized property
+	}
 
 	const patient = await Patient.findByIdAndUpdate(id, data, {
 		new: true,

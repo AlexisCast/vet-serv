@@ -20,7 +20,8 @@ const patientSchema = new mongoose.Schema({
 	},
 	gender: {
 		type: String,
-		enum: ["F", "M"],
+		default: "",
+		enum: ["F", "M", ""],
 	},
 	sterilized: {
 		type: Boolean,
