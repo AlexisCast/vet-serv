@@ -15,6 +15,9 @@ npx nodemon app
   - feat/1 -> feat/3
   - compatible with Branch 1.0.0-rc-1 in https://github.com/AlexisCast/vet-react
 
+## FE - BE
+-  [feat_11_FE](https://github.com/AlexisCast/vet-react/tree/feat/11_Gender_field_dropdown) -> [feat_6_BE](https://github.com/AlexisCast/vet-serv/tree/feat/6_patients_updates_for_feat_11_FE)
+-  [feat_12_FE](https://github.com/AlexisCast/vet-react/tree/feat/12_Species) -> [feat_7_BE](https://github.com/AlexisCast/vet-serv/tree/feat/7_species_for_feat_12_FE)
 
 ## Env File:
 

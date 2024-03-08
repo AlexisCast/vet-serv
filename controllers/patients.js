@@ -12,7 +12,7 @@ const obtainPatients = async (req, res = response) => {
 		Patient.countDocuments(query),
 		Patient.find(query)
 			.populate("user", "name")
-			.populate("owner", "name phoneNumber1")
+			.populate("owner", "name lastName phoneNumber1")
 			.populate("specie", "name")
 			.sort({ name: 1 })
 			.skip(Number(from))
@@ -37,7 +37,7 @@ const obtainPatientsByOwner = async (req, res = response) => {
 		Patient.countDocuments(query),
 		Patient.find(query)
 			.populate("user", "name")
-			.populate("owner", "name phoneNumber1")
+			.populate("owner", "name lastName phoneNumber1")
 			.populate("specie", "name")
 			.sort({ name: 1 })
 			.skip(Number(from))
