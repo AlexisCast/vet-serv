@@ -9,10 +9,10 @@ const isRoleValid = async (role = "") => {
 	}
 };
 
-const isSpecieValid = async (specie = "") => {
-	const existRace = await Specie.findOne({ name: specie });
-	if (!existRace) {
-		throw new Error(`The specie ${specie} is not registered in the DB`);
+const isSpecieValid = async (name = "") => {
+	const existSpecie = await Specie.findOne({ name: name.toUpperCase() });
+	if (existSpecie) {
+		throw new Error(`The specie ${name}, is already registered`);
 	}
 };
 
