@@ -40,7 +40,7 @@ const login = async (req, res = response) => {
 		}
 
 		//Generate JWT
-		const tokenExpiresIn = "30min";
+		const tokenExpiresIn = "2h";
 		const token = await generateJWT(user.id, tokenExpiresIn);
 
 		res.json({
@@ -118,7 +118,7 @@ const forgotPassword = async (req, res = response) => {
 			});
 		}
 
-		const tokenExpiresIn = "4h";
+		const tokenExpiresIn = "30m";
 		const token = await generateJWT(user.id, tokenExpiresIn);
 
 		const userUpdated = await User.findByIdAndUpdate(

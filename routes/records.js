@@ -5,12 +5,14 @@ const { validateJWT, isAdminRole, validateFields } = require("../middlewares");
 
 const { existPatientByID } = require("../helpers/db-validators");
 
-const {} = require("../controllers/patients");
-const { createRecord } = require("../controllers/records");
+const { createRecord, obtainRecords } = require("../controllers/records");
 
 const router = Router();
 
-//Create patient - private - with valid token
+//Get all the medical records - private - with valid token
+router.get("/", [validateJWT, isAdminRole, validateFields], obtainRecords);
+
+//Create medical record - private - with valid token
 router.post(
 	"/",
 	[
