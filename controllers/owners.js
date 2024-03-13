@@ -66,7 +66,7 @@ const updateOwner = async (req, res = response) => {
 		data.name = data.name.toUpperCase();
 	}
 	if (data.lastName) {
-		data.name = data.name.toUpperCase();
+		data.lastName = data.lastName.toUpperCase();
 	}
 
 	data.user = req.user._id;
