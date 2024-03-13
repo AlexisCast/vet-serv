@@ -118,7 +118,7 @@ const forgotPassword = async (req, res = response) => {
 			});
 		}
 
-		const tokenExpiresIn = "15m";
+		const tokenExpiresIn = "4h";
 		const token = await generateJWT(user.id, tokenExpiresIn);
 
 		const userUpdated = await User.findByIdAndUpdate(

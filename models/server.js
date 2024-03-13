@@ -15,10 +15,11 @@ class Server {
 			owners: "/api/owners",
 			patients: "/api/patients",
 			products: "/api/products",
+			records: "/api/records",
 			search: "/api/search",
 			species: "/api/species",
-			users: "/api/users",
 			uploads: "/api/uploads",
+			users: "/api/users",
 		};
 
 		//Connect to data base
@@ -61,10 +62,11 @@ class Server {
 		this.app.use(this.paths.owners, require("../routes/owners"));
 		this.app.use(this.paths.patients, require("../routes/patients"));
 		this.app.use(this.paths.products, require("../routes/products"));
+		this.app.use(this.paths.records, require("../routes/records"));
 		this.app.use(this.paths.search, require("../routes/search"));
 		this.app.use(this.paths.species, require("../routes/species"));
-		this.app.use(this.paths.users, require("../routes/users"));
 		this.app.use(this.paths.uploads, require("../routes/uploads"));
+		this.app.use(this.paths.users, require("../routes/users"));
 	}
 
 	listen() {

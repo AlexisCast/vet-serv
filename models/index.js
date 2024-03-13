@@ -2,9 +2,10 @@ const Category = require("./category");
 const Owner = require("./owner");
 const Patient = require("./patient");
 const Product = require("./product");
-const Specie = require("./specie");
+const Record = require("./record");
 const Role = require("./role");
 const Server = require("./server");
+const Specie = require("./specie");
 const User = require("./user");
 
 module.exports = {
@@ -12,8 +13,9 @@ module.exports = {
 	Owner,
 	Patient,
 	Product,
-	Specie,
+	Record,
 	Role,
 	Server,
+	Specie,
 	User,
 };
