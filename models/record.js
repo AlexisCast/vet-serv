@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-timezone");
 
 const recordSchema = new mongoose.Schema({
 	costsData: {
@@ -19,7 +20,10 @@ const recordSchema = new mongoose.Schema({
 	},
 	createdAt: {
 		type: Date,
-		default: Date.now,
+		default: () => moment.tz("America/Mexico_City").format(),
+	},
+	createdAtByUser: {
+		type: Date,
 	},
 });
 
