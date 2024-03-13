@@ -2,11 +2,9 @@ const { response } = require("express");
 const { Record } = require("../models");
 
 const obtainRecords = async (req, res = response) => {
+	// TODO:updated limit
 	const { limit = 5, from = 0 } = req.query;
 	///api/records?limit=5&from=10
-
-	console.log("req")
-	console.log(req)
 
 	const query = { state: true };
 	// const query = { state: { $in: [true, false] } };
