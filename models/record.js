@@ -25,6 +25,11 @@ const recordSchema = new mongoose.Schema({
 	createdAtByUser: {
 		type: Date,
 	},
+	user: {
+		type: mongoose.Schema.ObjectId,
+		ref: "User",
+		required: true,
+	},
 });
 
 recordSchema.methods.toJSON = function () {
