@@ -1,6 +1,13 @@
 const Role = require("../models/role");
 const User = require("../models/user");
-const { Category, Product, Owner, Patient, Specie } = require("../models");
+const {
+	Category,
+	Product,
+	Owner,
+	Patient,
+	Specie,
+	Record,
+} = require("../models");
 
 const isRoleValid = async (role = "") => {
 	const existRole = await Role.findOne({ role });
@@ -65,6 +72,13 @@ const existPatientByID = async (id = "") => {
 	}
 };
 
+const existRecordByID = async (id = "") => {
+	const existRecord = await Record.findById(id);
+	if (!existRecord) {
+		throw new Error(`The id for medical record does not exist: ${id}`);
+	}
+};
+
 const collectionsPermitted = (collection = "", collections = []) => {
 	const includes = collections.includes(collection);
 	if (!includes) {
@@ -84,6 +98,7 @@ module.exports = {
 	existUserByID,
 	existCategoryByID,
 	existProductByID,
+	existRecordByID,
 	existOwnerByID,
 	existPatientByID,
 	collectionsPermitted,

@@ -14,10 +14,11 @@ const obtainRecords = async (req, res = response) => {
 		Record.find(query)
 			.populate({
 				path: "patient",
-				select: "name specie owner",
+				select: "name specie owner user",
 				populate: [
 					{ path: "specie", model: "Specie", select: "name" },
 					{ path: "owner", model: "Owner", select: "lastName name" },
+					{ path: "user", model: "User", select: "name" },
 				],
 			})
 			.select("createdAt createdAtByUser")
@@ -26,10 +27,10 @@ const obtainRecords = async (req, res = response) => {
 			.limit(Number(limit)),
 	]);
 
-	// console.log(records)
 	res.json({
 		total,
 		records: records.map((record) => ({
+			_id: record._id,
 			patient: {
 				id: record.patient._id,
 				name: record.patient.name,
@@ -37,14 +38,47 @@ const obtainRecords = async (req, res = response) => {
 				ownerName: record.patient.owner.name,
 				ownerLastName: record.patient.owner.lastName,
 			},
+			user: {
+				_id: record.patient.user._id,
+				name: record.patient.user.name,
+			},
 			createdAt: record.createdAt,
 			createdAtByUser: record.createdAtByUser,
 		})),
 	});
 };
 
+const obtainRecord = async (req, res = response) => {
+	const { id } = req.params;
+
+	const record = await Record.findById(id).populate({
+		path: "patient",
+		select: "",
+		populate: [
+			{ path: "specie", model: "Specie", select: "name" },
+			{
+				path: "owner",
+				model: "Owner",
+				select: "lastName name phoneNumber1",
+			},
+			{ path: "user", model: "User", select: "name" },
+		],
+	});
+	res.json(record);
+};
+
 const createRecord = async (req, res = response) => {
 	const { user, ...body } = req.body;
+
+	console.log("body");
+	console.log(body);
+	// const categoryDB = await Category.findOne({ name });
+
+	// if (categoryDB) {
+	// 	return res.status(400).json({
+	// 		msg: `The category ${categoryDB.name}, already exist`,
+	// 	});
+	// }
 
 	//Generate the data to create/save
 	const data = {
@@ -60,6 +94,7 @@ const createRecord = async (req, res = response) => {
 };
 
 module.exports = {
+	obtainRecord,
 	obtainRecords,
 	createRecord,
 };
