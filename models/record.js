@@ -22,6 +22,10 @@ const recordSchema = new mongoose.Schema({
 		type: Date,
 		default: () => moment.tz("America/Mexico_City").format(),
 	},
+	lastUpdatedAt: {
+		type: Date,
+		default: () => moment.tz("America/Mexico_City").format(),
+	},
 	createdAtByUser: {
 		type: Date,
 	},
