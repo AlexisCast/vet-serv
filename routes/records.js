@@ -12,6 +12,7 @@ const {
 	createRecord,
 	obtainRecords,
 	obtainRecord,
+	updateRecord,
 } = require("../controllers/records");
 
 const router = Router();
@@ -43,6 +44,19 @@ router.post(
 		validateFields,
 	],
 	createRecord
+);
+
+//Update medical record- private - with valid token
+router.put(
+	"/:id",
+	[
+		validateJWT,
+		isAdminRole,
+		check("id", "Not a Mongo ID valid").isMongoId(),
+		check("id").custom(existRecordByID),
+		validateFields,
+	],
+	updateRecord
 );
 
 module.exports = router;

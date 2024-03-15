@@ -1,3 +1,5 @@
+const moment = require("moment-timezone");
+
 const { response } = require("express");
 const { Record } = require("../models");
 
@@ -22,6 +24,7 @@ const obtainRecords = async (req, res = response) => {
 				],
 			})
 			.select("createdAt createdAtByUser")
+			.select("lastUpdatedAt")
 			.sort({ createdAt: -1 })
 			.skip(Number(from))
 			.limit(Number(limit)),
@@ -42,6 +45,7 @@ const obtainRecords = async (req, res = response) => {
 				_id: record.patient.user._id,
 				name: record.patient.user.name,
 			},
+			lastUpdatedAt: record.lastUpdatedAt,
 			createdAt: record.createdAt,
 			createdAtByUser: record.createdAtByUser,
 		})),
@@ -72,13 +76,6 @@ const createRecord = async (req, res = response) => {
 
 	console.log("body");
 	console.log(body);
-	// const categoryDB = await Category.findOne({ name });
-
-	// if (categoryDB) {
-	// 	return res.status(400).json({
-	// 		msg: `The category ${categoryDB.name}, already exist`,
-	// 	});
-	// }
 
 	//Generate the data to create/save
 	const data = {
@@ -93,8 +90,25 @@ const createRecord = async (req, res = response) => {
 	res.status(201).json(record);
 };
 
+const updateRecord = async (req, res = response) => {
+	const { id } = req.params;
+	const { state, user, ...data } = req.body;
+
+	data.user = req.user._id;
+	data.lastUpdatedAt = moment().tz("America/Mexico_City").format();
+
+	const record = await Record.findByIdAndUpdate(id, data, {
+		new: true,
+	});
+
+	setTimeout(() => {
+		res.json(record);
+	}, 5000);
+};
+
 module.exports = {
 	obtainRecord,
 	obtainRecords,
 	createRecord,
+	updateRecord,
 };
