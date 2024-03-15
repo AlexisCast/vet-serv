@@ -74,9 +74,6 @@ const obtainRecord = async (req, res = response) => {
 const createRecord = async (req, res = response) => {
 	const { user, ...body } = req.body;
 
-	console.log("body");
-	console.log(body);
-
 	//Generate the data to create/save
 	const data = {
 		...body,
@@ -101,9 +98,23 @@ const updateRecord = async (req, res = response) => {
 		new: true,
 	});
 
-	setTimeout(() => {
-		res.json(record);
-	}, 5000);
+	res.json(record);
+};
+
+//update state to falsy
+const deleteRecord = async (req, res = response) => {
+	const { id } = req.params;
+
+	//Delete physically
+	// const recordDeleted = await Record.findByIdAndDelete(id);
+
+	const recordDeleted = await Record.findByIdAndUpdate(
+		id,
+		{ state: false },
+		{ new: true }
+	);
+
+	res.json(recordDeleted);
 };
 
 module.exports = {
@@ -111,4 +122,5 @@ module.exports = {
 	obtainRecords,
 	createRecord,
 	updateRecord,
+	deleteRecord,
 };
