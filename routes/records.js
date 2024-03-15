@@ -13,6 +13,7 @@ const {
 	obtainRecords,
 	obtainRecord,
 	updateRecord,
+	deleteRecord,
 } = require("../controllers/records");
 
 const router = Router();
@@ -57,6 +58,19 @@ router.put(
 		validateFields,
 	],
 	updateRecord
+);
+
+//Delete a record - Admin
+router.delete(
+	"/:id",
+	[
+		validateJWT,
+		isAdminRole,
+		check("id", "Not a Mongo ID valid").isMongoId(),
+		check("id").custom(existRecordByID),
+		validateFields,
+	],
+	deleteRecord
 );
 
 module.exports = router;
