@@ -51,14 +51,12 @@ router.post(
 		// check("specie").custom(isSpecieValid),
 		check("specie", "The specie is required").not().isEmpty(),
 		check("specie").custom(existSpecieByID),
-		check("age", "Age must be a number between 0 and 100").isFloat({
-			min: 0,
-			max: 100,
-		}),
-		check("weight", "Weight must be a number between 0 and 999").isFloat({
-			min: 0,
-			max: 999,
-		}),
+		check("age", "Age must be a number between 0 and 100")
+			.isFloat()
+			.isFloat({ min: 0, max: 100 }),
+		check("weight", "Age must be a number between 0 and 100")
+			.isFloat()
+			.isFloat({ min: 0, max: 100 }),
 		check("gender").custom(validateGender),
 		check("owner", "The owner is required").not().isEmpty(),
 		check("owner").custom(existOwnerByID),
