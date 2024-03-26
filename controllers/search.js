@@ -1,14 +1,18 @@
 const { response } = require("express");
 const { ObjectId } = require("mongoose").Types;
 
-const { User, Category, Product } = require("../models");
+const { User, Category, Product, Patient } = require("../models");
+
+const { validateJWT, isAdminRole, validateFields } = require("../middlewares");
 
 const allowedCollections = [
-	"users",
 	"categories",
+	"owners",
+	"patients",
+	"products-by-category",
 	"products",
 	"roles",
-	"products-by-category",
+	"users",
 ];
 
 const searchUsers = async (phrase = "", res = response) => {
@@ -57,6 +61,29 @@ const searchCategories = async (phrase = "", res = response) => {
 
 	res.json({
 		results: categories,
+	});
+};
+
+const searchPatients = async (phrase = "", res = response) => {
+	const isMongoID = ObjectId.isValid(phrase); //True
+
+	console.log("phrase");
+	console.log(phrase);
+
+	if (isMongoID) {
+		const patient = await Patient.findById(phrase);
+
+		return res.json({
+			results: patient ? [patient] : [],
+		});
+	}
+
+	const regex = new RegExp(phrase, "i");
+
+	const patients = await Patient.find({ name: regex, state: true });
+
+	res.json({
+		results: patients,
 	});
 };
 
@@ -145,8 +172,13 @@ const search = (req, res = response) => {
 			searchCategories(phrase, res);
 			break;
 
+		case "patients":
+			searchPatients(phrase, res);
+			break;
+
 		case "products":
-			searchProducts(phrase, res);
+			[validateJWT, isAdminRole, validateFields],
+				searchProducts(phrase, res);
 			break;
 
 		case "products-by-category":
