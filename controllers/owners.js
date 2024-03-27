@@ -1,8 +1,10 @@
+const moment = require("moment-timezone");
+
 const { response } = require("express");
 const { Owner } = require("../models");
 
 const obtainOwners = async (req, res = response) => {
-	const { limit = 50, from = 0 } = req.query;
+	const { limit = 15, from = 0 } = req.query;
 	///api/owners?limit=5&from=10
 
 	const query = { state: true };
@@ -70,6 +72,7 @@ const updateOwner = async (req, res = response) => {
 	}
 
 	data.user = req.user._id;
+	data.lastUpdatedAt = moment().tz("America/Mexico_City").format();
 
 	const owner = await Owner.findByIdAndUpdate(id, data, {
 		new: true,
@@ -79,7 +82,7 @@ const updateOwner = async (req, res = response) => {
 };
 
 //update state to falsy
-const deleteOwner= async (req, res = response) => {
+const deleteOwner = async (req, res = response) => {
 	const { id } = req.params;
 
 	//Delete physically
@@ -99,5 +102,5 @@ module.exports = {
 	obtainOwners,
 	obtainOwner,
 	updateOwner,
-  deleteOwner
+	deleteOwner,
 };
