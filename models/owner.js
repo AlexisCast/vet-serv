@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment-timezone");
 
 const ownerSchema = new mongoose.Schema({
 	name: {
@@ -19,7 +20,7 @@ const ownerSchema = new mongoose.Schema({
 	address: {
 		type: String,
 	},
-  email: {
+	email: {
 		type: String,
 	},
 	other: {
@@ -29,6 +30,17 @@ const ownerSchema = new mongoose.Schema({
 		type: Boolean,
 		default: true,
 		required: true,
+	},
+	createdAt: {
+		type: Date,
+		default: () => moment.tz("America/Mexico_City").format(),
+	},
+	lastUpdatedAt: {
+		type: Date,
+		default: () => moment.tz("America/Mexico_City").format(),
+	},
+	createdAtByUser: {
+		type: Date,
 	},
 	user: {
 		type: mongoose.Schema.ObjectId,
