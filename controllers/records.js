@@ -5,7 +5,7 @@ const { Record } = require("../models");
 
 const obtainRecords = async (req, res = response) => {
 	// TODO:updated limit
-	const { limit = 5, from = 0 } = req.query;
+	const { limit = 15, from = 0 } = req.query;
 	///api/records?limit=5&from=10
 
 	const query = { state: true };
