@@ -24,6 +24,8 @@ npx nodemon app
 -  [feat_20_FE](https://github.com/AlexisCast/vet-react/tree/feat/20_EditRecord_page_update_record) -  [feat_21_FE](https://github.com/AlexisCast/vet-react/tree/feat/21_DeleteRecord) -> [feat_12_BE](https://github.com/AlexisCast/vet-serv/tree/feat/12_records_delete_record_for_feat_21_FE)
 -  [feat_26_FE](https://github.com/AlexisCast/vet-react/tree/feat/26_InputSearch_Patients) -> [feat_13_BE](https://github.com/AlexisCast/vet-serv/tree/feat/13_searchPatients_Patients_controller_for_feat_26_FE)
 -  [feat_27_FE](https://github.com/AlexisCast/vet-react/tree/feat/27_OwnersTable_RecordsTableUpdate) -> [feat_13_BE](https://github.com/AlexisCast/vet-serv/tree/feat/14_owners_records_updated_for_feat_27_FE)
+-  [feat_28_FE](https://github.com/AlexisCast/vet-react/tree/feat/29_InputSearch_Owners_and_Update_Owner_Record_Tables_and_show_deleted_results) -> [feat_14_BE](https://github.com/AlexisCast/vet-serv/tree/feat/14_owners_records_search_controllers%2Cupdated_for_feat_28_FE)
+
 ## Env File:
 
 - MONGODB_CNN: <mongodb+srv://...>

@@ -4,10 +4,10 @@ const { response } = require("express");
 const { Owner } = require("../models");
 
 const obtainOwners = async (req, res = response) => {
-	const { limit = 15, from = 0 } = req.query;
+	const { limit = 15, from = 0, state=true} = req.query;
 	///api/owners?limit=5&from=10
 
-	const query = { state: true };
+	const query = { state: state };
 	// const query = { state: { $in: [true, false] } };
 
 	const [total, owners] = await Promise.all([

@@ -1,12 +1,13 @@
 const { response } = require("express");
 const { ObjectId } = require("mongoose").Types;
 
-const { User, Category, Product, Patient } = require("../models");
+const { User, Category, Product, Patient, Owner } = require("../models");
 
 const { validateJWT, isAdminRole, validateFields } = require("../middlewares");
 
 const allowedCollections = [
 	"categories",
+	"owners",
 	"owners",
 	"patients",
 	"products-by-category",
@@ -80,10 +81,36 @@ const searchPatients = async (phrase = "", res = response) => {
 
 	const regex = new RegExp(phrase, "i");
 
-	const patients = await Patient.find({ name: regex, state: true });
+	const patients = await Patient.find({ name: regex, state: true })
+		.populate("owner", "name lastName phoneNumber1")
+		.populate("specie", "name")
+		.sort({ name: 1 });
 
 	res.json({
 		results: patients,
+	});
+};
+
+const searchOwners = async (phrase = "", res = response) => {
+	const isMongoID = ObjectId.isValid(phrase); //True
+
+	if (isMongoID) {
+		const owner = await Owner.findById(phrase);
+
+		return res.json({
+			results: owner ? [owner] : [],
+		});
+	}
+
+	const regex = new RegExp(phrase, "i");
+
+	const owners = await Owner.find({
+		$or: [{ name: regex }, { lastName: regex }, { phoneNumber1: regex }],
+		state: true,
+	}).sort({ name: 1 });
+
+	res.json({
+		results: owners,
 	});
 };
 
@@ -174,6 +201,10 @@ const search = (req, res = response) => {
 
 		case "patients":
 			searchPatients(phrase, res);
+			break;
+
+		case "owners":
+			searchOwners(phrase, res);
 			break;
 
 		case "products":
