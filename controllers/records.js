@@ -5,10 +5,10 @@ const { Record } = require("../models");
 
 const obtainRecords = async (req, res = response) => {
 	// TODO:updated limit
-	const { limit = 15, from = 0 } = req.query;
+	const { limit = 15, from = 0, state = true } = req.query;
 	///api/records?limit=5&from=10
 
-	const query = { state: true };
+	const query = { state: state };
 	// const query = { state: { $in: [true, false] } };
 
 	const [total, records] = await Promise.all([
